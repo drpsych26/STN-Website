@@ -9,23 +9,22 @@ Public-facing STN website source.
 - Responsive layout for mobile, tablet and desktop.
 
 ## Deployment status
-The website source is committed, but **a live deployment has not yet been verified**.
 
-The GitHub Pages workflow is configured in `.github/workflows/pages.yml`. Its latest run failed because GitHub rejected the Pages site creation request with `Resource not accessible by integration`. The connected GitHub integration can write repository contents and workflows but cannot enable the Pages site through the repository administration endpoint.
+**GitHub Pages deployment: successful.** The deployment workflow completed successfully on 15 November 2026. Both the build and deploy jobs passed.
 
-### One-time owner action to enable Pages
-1. Open **Settings → Pages** in this repository: https://github.com/drpsych26/STN-Website/settings/pages
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Save the setting.
-4. Open **Actions → Deploy STN website to GitHub Pages** and rerun the latest workflow, or push a subsequent commit.
-5. Confirm the deployment job succeeds and verify the published URL before announcing the site as live.
+- Published project URL: https://drpsych26.github.io/STN-Website/
+- Workflow run: https://github.com/drpsych26/STN-Website/actions/runs/43658020226
+- Deployment source: `.github/workflows/pages.yml`
 
-Only after Pages is enabled and the deployment succeeds should the verified STN domain and DNS be connected. Do not add a CNAME or DNS records until the exact domain and hosting target are confirmed.
+The GitHub Actions deployment result confirms that Pages accepted and deployed the site artifact. The public URL should still be opened on a normal browser/device and checked for content, mobile layout and asset loading. A custom STN domain and DNS have not been configured or verified.
 
-## Required before publishing operational contact details
+## Required before operational launch
+
 - Confirm the public STN email address, phone number and service address.
 - Publish a reviewed privacy notice and website terms.
 - Confirm which services are currently accepting referrals and the regions covered.
-- Confirm the approved logo/brand asset and public claims about clinical validation, registrations, accreditations or service availability.
+- Confirm approved logo/brand assets and all public claims about clinical validation, registrations, accreditations or service availability.
+- Complete a real-device accessibility, navigation and content review.
+- Connect the exact registered STN domain only after the domain and DNS provider details are confirmed.
 
-The site deliberately does not invent contact details, service availability, professional registrations or regulatory approvals. The enquiry section is informational until a verified contact channel is supplied. The privacy notice is a draft and must not be treated as a completed Privacy Act 2020 or Health Information Privacy Code assessment.
+The site deliberately does not invent contact details, service availability, professional registrations or regulatory approvals. The enquiry section is informational until a verified contact channel is supplied. `PRIVACY-NOTICE-DRAFT.md` is a draft and must not be treated as a completed Privacy Act 2020 or Health Information Privacy Code assessment. Do not collect health information through this static site.
