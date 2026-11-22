@@ -43,14 +43,14 @@ body{background:radial-gradient(1200px 600px at 85% -10%,rgba(175,44,255,.08),tr
 .footer{background:#0a0810}
 .sectionhead h2{text-wrap:balance}
 :focus-visible{outline:3px solid var(--purple);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.contactlist{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:16px 0 22px}.contactlist dt{color:var(--ink);font-weight:700}.contactlist dd{margin:0;color:var(--muted)}@media(max-width:460px){.contactlist{grid-template-columns:1fr}.contactlist dd{margin-bottom:8px}}@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><div class="wrap nav">
 <a class="brand" href="#main" aria-label="Supportive Therapy Network Limited — Rehab. Right."><img class="brand-logo" src="assets/brand/stn-logo-original.png" alt="Supportive Therapy Network Limited — Rehab. Right." width="210" height="84"></a>
-<nav class="navlinks" aria-label="Main navigation"><a href="#about">About</a><a href="#approach">Our approach</a><a href="#services">Support pathways</a><a href="#assessment">Assessment</a><a href="#governance">Governance</a></nav>
+<nav class="navlinks" aria-label="Main navigation"><a href="#services">Services</a><a href="#approach">Our approach</a><a href="#assessment">Assessment</a><a href="#governance">Safety</a><a href="#contact">Contact</a></nav>
 
 </div></header>
 <div class="crisis" role="region" aria-label="Urgent support"><div class="wrap"><strong>If you need urgent help:</strong> call <strong>111</strong> if someone is in danger. Free support 24/7: <a href="tel:1737">1737</a> (call or text, Need to Talk), <a href="tel:0800543354">Lifeline 0800 543 354</a> (text 4357). Thinking about suicide: <a href="tel:0508828865">Suicide Crisis Helpline 0508 828 865</a>.</div></div>
@@ -70,7 +70,7 @@ body{background:radial-gradient(1200px 600px at 85% -10%,rgba(175,44,255,.08),tr
 <ul class="featurelist"><li>Listen to the person’s priorities and lived experience.</li><li>Understand strengths, needs, risks and protective factors.</li><li>Coordinate appropriate assessment and therapeutic input.</li><li>Connect care planning with practical and community supports.</li><li>Review progress and adapt the pathway as needs change.</li></ul>
 </div></section>
 <section id="services" class="band"><div class="wrap">
-<div class="sectionhead"><div class="eyebrow">Support pathways</div><h2>Connected support, built around the person.</h2><p>These are planned pathways under development. They are not services currently offered through this website.</p></div>
+<div class="sectionhead"><div class="eyebrow">Services</div><h2>Connected support, built around the person.</h2><p>STN services are planned and in development. They are not yet accepting referrals and are not offered through this website. Service availability, referral eligibility and the regions covered will be published here once confirmed.</p></div>
 <div class="grid">
 <article class="card"><div class="num">01 / ASSESSMENT</div><h3>Whole-person assessment</h3><p>Structured exploration of presenting concerns, functioning, history, strengths, safety and support needs.</p></article>
 <article class="card"><div class="num">02 / THERAPEUTIC</div><h3>Mental health and wellbeing</h3><p>Pathways for psychological support, therapeutic planning, rehabilitation and appropriate referral.</p></article>
@@ -89,15 +89,15 @@ body{background:radial-gradient(1200px 600px at 85% -10%,rgba(175,44,255,.08),tr
 <p class="notice" style="margin-top:24px">Digital tools support structured information gathering and clinical workflow. They do not replace professional judgment or independently make a formal diagnosis. Any service or assessment is subject to appropriate practitioner scope, consent, safety procedures and service availability.</p>
 </div></section>
 <section id="governance" class="band"><div class="wrap two">
-<div class="sectionhead"><div class="eyebrow">Trust and accountability</div><h2>Safety, privacy and human oversight matter.</h2><p>STN’s intended operating model is built around responsible handling of sensitive information, transparent clinical decision support and clear accountability.</p></div>
+<div class="sectionhead"><div class="eyebrow">Safety and accountability</div><h2>Safety, privacy and human oversight matter.</h2><p>STN’s intended operating model is built around responsible handling of sensitive information, transparent clinical decision support and clear accountability.</p></div>
 <div><ul class="featurelist"><li>Informed participation and clear information about data use.</li><li>Human review of assessment findings and clinical decisions.</li><li>Appropriate escalation when immediate safety concerns arise.</li><li>Access controls, secure systems and accountable records.</li><li>Respect for each person’s dignity, rights and preferences.</li></ul></div>
 </div></section>
 <!-- OWNER DECISION PENDING: confirm the public contact number (business line or role-based channel) before launch. See README. -->
 <section id="contact"><div class="wrap two">
 <div class="sectionhead"><div class="eyebrow">Contact</div><h2>Start a conversation with STN.</h2><p>For service enquiries, partnerships or information about the STN platform, use the organisation’s verified contact channel.</p></div>
-<div class="card"><h3>Make an enquiry</h3><p class="muted">Contact Dylan Hendriks at Supportive Therapy Network Limited.</p><p><strong>Dylan Hendriks</strong><br><a href="tel:+64223533688">022 353 3688</a></p><a class="button" href="tel:+64223533688">Call STN</a><p class="muted" style="margin-top:18px">Email: <a href="mailto:STN.ltd.management@gmail.com">STN.ltd.management@gmail.com</a>. This is an interim address and will be replaced by the STN domain email.</p><p class="muted">If you are in immediate danger or need urgent mental health assistance, contact emergency services or your local crisis service rather than relying on this website.</p></div>
+<div class="card"><h3>Customer service and enquiries</h3><p class="muted">Contact Dylan Hendriks at Supportive Therapy Network Limited.</p><dl class="contactlist"><dt>Phone</dt><dd><a href="tel:+64223533688">022 353 3688</a></dd><dt>Email</dt><dd><a href="mailto:STN.ltd.management@gmail.com">STN.ltd.management@gmail.com</a> <span class="muted">(interim address; it will be replaced by the STN domain email)</span></dd><dt>Location</dt><dd>Auckland, New Zealand</dd><dt>Head office address</dt><dd>To be confirmed</dd><dt>Privacy officer</dt><dd>To be confirmed</dd></dl><a class="button" href="tel:+64223533688">Call STN</a><p class="muted" style="margin-top:18px">For enquiries only. Please do not send health information, crisis details or identity documents by phone message or email.</p><p class="muted">If you are in immediate danger or need urgent mental health assistance, contact emergency services or your local crisis service rather than relying on this website.</p></div>
 </div></section>
 </main>
-<footer class="footer"><div class="wrap footerrow"><span>© <span id="year"></span> Supportive Therapy Network Limited. All rights reserved.</span><span>New Zealand · <a href="legal.html">Legal, licensing &amp; clinical governance</a> · <a href="#governance">Privacy and governance</a></span></div></footer>
+<footer class="footer"><div class="wrap footerrow"><span>© <span id="year"></span> Supportive Therapy Network Limited. All rights reserved.</span><span>Auckland, New Zealand · <a href="legal.html">Legal, licensing &amp; clinical governance</a> · <a href="legal.html#privacy">Privacy notice (draft)</a> · <a href="#governance">Safety</a></span></div></footer>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body></html>
