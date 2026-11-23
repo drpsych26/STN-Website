@@ -26,11 +26,22 @@ jobs:
           enablement: true
       - name: Validate static site
         run: |
-          test -s index.html
+          set -euo pipefail
+          test -s assets/css/site.css
+          test -s assets/js/site.js
+          test -s assets/brand/stn-logo-original.png
           grep -q '<title>Supportive Therapy Network' index.html
-          grep -q 'name="viewport"' index.html
-          grep -q 'id="contact"' index.html
-          grep -q 'id="governance"' index.html
+          for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html; do
+            test -s "$page"
+            grep -q 'name="viewport"' "$page"
+            grep -q 'class="navlinks"' "$page"
+            grep -q 'aria-current="page"' "$page"
+            grep -q 'href="tel:1737"' "$page"
+            grep -q 'assets/css/site.css' "$page"
+          done
+          grep -q 'id="contact"' contact.html
+          grep -q 'id="privacy"' legal.html
+          grep -q 'not yet accepting referrals' services.html
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
