@@ -1,0 +1,36 @@
+# Read-only status check for the Pages custom domain and certificate.
+# Runs only on the ops/https-fix branch when .github/ops/pages-status.trigger changes.
+# Uses the built-in token with pages: read. Changes nothing.
+name: Ops - Pages domain and certificate status
+
+on:
+  push:
+    branches: [ops/https-fix]
+    paths: [".github/ops/pages-status.trigger"]
+
+permissions:
+  pages: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DOMAIN: supportivetherapy.network
+    steps:
+      - name: Report Pages settings and certificate state (polls up to 45 minutes)
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 45); do
+            curl -sS -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2022-11-28' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages" -o pages.json
+            state=$(jq -r '.https_certificate.state // "none"' pages.json)
+            echo "check $i $(date -u +%H:%M:%S): cname=$(jq -r .cname pages.json) enforced=$(jq -r .https_enforced pages.json) cert=${state} domains=$(jq -c '.https_certificate.domains // []' pages.json) $(jq -r '.https_certificate.description // ""' pages.json)"
+            subj=$(echo | openssl s_client -connect "${DOMAIN}:443" -servername "${DOMAIN}" 2>/dev/null | openssl x509 -noout -subject 2>/dev/null || true)
+            echo "  served certificate: ${subj:-none}"
+            case "$state" in approved|errored|bad_authz) break ;; esac
+            echo "$subj" | grep -q "$DOMAIN" && break
+            sleep 60
+          done
+          echo "--- final ---"; jq '{cname, status, build_type, https_enforced, https_certificate}' pages.json
