@@ -1,0 +1,119 @@
+# One-off operations workflow: fix HTTPS for supportivetherapy.network.
+#
+# Runs ONLY on the ops/https-fix branch, and only when .github/ops/https-fix.trigger
+# changes. It never runs on main and never deploys the site.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   GODADDY_API_KEY, GODADDY_API_SECRET  GoDaddy production API key (developer.godaddy.com/keys)
+#   PAGES_ADMIN_TOKEN                    fine-grained token, STN-Website only,
+#                                        Administration: read/write, Pages: read/write, short expiry
+# Delete all three secrets, the token and the GoDaddy key after a successful run.
+#
+# What it changes:
+#   1. GoDaddy DNS: the CNAME record "www" -> drpsych26.github.io (was "@"). Apex A records untouched.
+#   2. GitHub Pages: removes and re-adds the custom domain to restart certificate provisioning.
+#   3. Waits for the certificate, then turns on Enforce HTTPS.
+name: Ops - fix HTTPS for supportivetherapy.network
+
+on:
+  push:
+    branches: [ops/https-fix]
+    paths: [".github/ops/https-fix.trigger"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-https-fix
+  cancel-in-progress: false
+
+env:
+  DOMAIN: supportivetherapy.network
+  PAGES_HOST: drpsych26.github.io
+  REPO: drpsych26/STN-Website
+
+jobs:
+  fix-https:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      GD_KEY: ${{ secrets.GODADDY_API_KEY }}
+      GD_SECRET: ${{ secrets.GODADDY_API_SECRET }}
+      GH_ADMIN: ${{ secrets.PAGES_ADMIN_TOKEN }}
+    steps:
+      - name: Check required secrets are set (values are never printed)
+        run: |
+          missing=0
+          for v in GD_KEY GD_SECRET GH_ADMIN; do
+            if [ -z "${!v}" ]; then echo "::error::Required secret for $v is not set"; missing=1; fi
+          done
+          exit "$missing"
+
+      - name: "1. DNS - point www at GitHub Pages (GoDaddy API)"
+        run: |
+          set -euo pipefail
+          api="https://api.godaddy.com/v1/domains/${DOMAIN}/records"
+          gd() { # method path [body]; prints status, fails with the response body on error
+            local code
+            code=$(curl -sS -o /tmp/gd.json -w '%{http_code}' -X "$1" \
+              -H "Authorization: sso-key ${GD_KEY}:${GD_SECRET}" -H 'Content-Type: application/json' \
+              "${api}$2" ${3:+-d "$3"})
+            if [ "${code:0:1}" != "2" ]; then echo "::error::GoDaddy $1 $2 returned HTTP $code"; cat /tmp/gd.json; echo; exit 1; fi
+          }
+          gd GET /CNAME/www; echo "www CNAME before: $(jq -c '[.[].data]' /tmp/gd.json)"
+          gd GET /A/@;       echo "apex A records (not changed): $(jq -c '[.[].data]' /tmp/gd.json)"
+          gd PUT /CNAME/www "[{\"data\":\"${PAGES_HOST}\",\"ttl\":600}]"
+          gd GET /CNAME/www; now=$(jq -r '.[0].data' /tmp/gd.json); echo "www CNAME after: $now"
+          [ "$now" = "$PAGES_HOST" ]
+
+      - name: "2. DNS - confirm the change at GoDaddy's name servers"
+        run: |
+          set -euo pipefail
+          ns=$(dig +short NS "$DOMAIN" @8.8.8.8 | head -1); echo "authoritative name server: $ns"
+          for i in $(seq 1 30); do
+            got=$(dig +short CNAME "www.$DOMAIN" @"$ns" | sed 's/\.$//')
+            echo "check $i: www -> ${got:-<none>}"
+            [ "$got" = "$PAGES_HOST" ] && exit 0
+            sleep 20
+          done
+          echo "::error::www CNAME did not update at $ns within 10 minutes"; exit 1
+
+      - name: "3. Pages - restart certificate provisioning"
+        run: |
+          set -euo pipefail
+          gh() { # method url [body]
+            curl -sS -o /tmp/gh.json -w '%{http_code}' -X "$1" \
+              -H "Authorization: Bearer ${GH_ADMIN}" -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2022-11-28' "https://api.github.com/repos/${REPO}/pages$2" ${3:+-d "$3"}
+          }
+          code=$(gh GET ""); echo "GET pages: $code"; [ "$code" = 200 ] || { cat /tmp/gh.json; exit 1; }
+          jq '{cname, status, https_enforced, https_certificate}' /tmp/gh.json
+          code=$(gh PUT "" '{"cname":null}');                  echo "remove custom domain: $code"; [ "$code" = 204 ] || { cat /tmp/gh.json; exit 1; }
+          sleep 20
+          code=$(gh PUT "" "{\"cname\":\"${DOMAIN}\"}");       echo "re-add custom domain: $code"; [ "$code" = 204 ] || { cat /tmp/gh.json; exit 1; }
+          sleep 30
+          code=$(gh GET /health); echo "DNS health check started: $code"
+
+      - name: "4. Pages - wait for the certificate, then enforce HTTPS"
+        run: |
+          set -euo pipefail
+          gh() {
+            curl -sS -o /tmp/gh.json -w '%{http_code}' -X "$1" \
+              -H "Authorization: Bearer ${GH_ADMIN}" -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2022-11-28' "https://api.github.com/repos/${REPO}/pages$2" ${3:+-d "$3"}
+          }
+          for i in $(seq 1 60); do
+            gh GET "" >/dev/null
+            state=$(jq -r '.https_certificate.state // "none"' /tmp/gh.json)
+            echo "check $i: certificate state = $state ($(jq -r '.https_certificate.description // ""' /tmp/gh.json))"
+            case "$state" in
+              approved) break ;;
+              errored|bad_authz|authorization_revoked) echo "::error::Certificate provisioning failed: $state"; jq . /tmp/gh.json; exit 1 ;;
+            esac
+            if [ "$i" -eq 60 ]; then echo "::error::Certificate not approved within 60 minutes"; exit 1; fi
+            sleep 60
+          done
+          code=$(gh PUT "" '{"https_enforced":true}'); echo "enforce HTTPS: $code"; [ "$code" = 204 ] || { cat /tmp/gh.json; exit 1; }
+          gh GET "" >/dev/null; jq '{cname, https_enforced, https_certificate}' /tmp/gh.json
+          curl -sSI "https://${DOMAIN}/" | head -1
+          curl -sSI "http://${DOMAIN}/" | grep -i -E '^(HTTP|location)'
