@@ -1,0 +1,59 @@
+# One-off: point supportivetherapy.network email at Forward Email's free forwarding,
+# delivering every address at the domain to the STN Gmail inbox.
+# Runs ONLY on ops/https-fix when .github/ops/email-dns.trigger changes.
+# Needs secrets GODADDY_API_KEY and GODADDY_API_SECRET (never printed).
+# Replaces the @ MX records and adds one TXT record; every other record is kept.
+name: Ops - domain email forwarding DNS
+on:
+  push:
+    branches: [ops/https-fix]
+    paths: [".github/ops/email-dns.trigger"]
+permissions:
+  contents: read
+env:
+  DOMAIN: supportivetherapy.network
+  FORWARD_TO: stn.ltd.management@gmail.com
+jobs:
+  email-dns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GD_KEY: ${{ secrets.GODADDY_API_KEY }}
+      GD_SECRET: ${{ secrets.GODADDY_API_SECRET }}
+    steps:
+      - name: Check required secrets are set
+        run: |
+          missing=0
+          for v in GD_KEY GD_SECRET; do [ -n "${!v}" ] || { echo "::error::Secret for $v is not set"; missing=1; }; done
+          exit "$missing"
+      - name: Update MX and TXT records at GoDaddy
+        run: |
+          set -euo pipefail
+          api="https://api.godaddy.com/v1/domains/${DOMAIN}/records"
+          gd() {
+            local code
+            code=$(curl -sS -o /tmp/gd.json -w '%{http_code}' -X "$1" -H "Authorization: sso-key ${GD_KEY}:${GD_SECRET}" \
+              -H 'Content-Type: application/json' "${api}$2" ${3:+-d "$3"})
+            if [ "${code:0:1}" != "2" ]; then echo "::error::GoDaddy $1 $2 returned HTTP $code"; cat /tmp/gd.json; echo; exit 1; fi
+          }
+          gd GET /MX/@;  echo "MX before:  $(jq -c '[.[] | {data, priority}]' /tmp/gd.json)"
+          gd GET /TXT/@; echo "TXT before: $(jq -c '[.[].data]' /tmp/gd.json)"
+          has_fwd=$(jq -r --arg v "forward-email=${FORWARD_TO}" '[.[] | select(.data == $v)] | length' /tmp/gd.json)
+          gd PUT /MX/@ '[{"data":"mx1.forwardemail.net","priority":0,"ttl":3600},{"data":"mx2.forwardemail.net","priority":0,"ttl":3600}]'
+          if [ "$has_fwd" = "0" ]; then
+            gd PATCH "" "[{\"type\":\"TXT\",\"name\":\"@\",\"data\":\"forward-email=${FORWARD_TO}\",\"ttl\":3600}]"
+          fi
+          gd GET /MX/@;  echo "MX after:   $(jq -c '[.[] | {data, priority}]' /tmp/gd.json)"
+          gd GET /TXT/@; echo "TXT after:  $(jq -c '[.[].data]' /tmp/gd.json)"
+      - name: Confirm at GoDaddy's name servers
+        run: |
+          set -euo pipefail
+          ns=$(dig +short NS "$DOMAIN" @8.8.8.8 | head -1)
+          for i in $(seq 1 30); do
+            mx=$(dig +short MX "$DOMAIN" @"$ns" | tr '\n' ' '); txt=$(dig +short TXT "$DOMAIN" @"$ns" | tr '\n' ' ')
+            echo "check $i: MX=[$mx] TXT=[$txt]"
+            if echo "$mx" | grep -q mx1.forwardemail.net && echo "$mx" | grep -q mx2.forwardemail.net && echo "$txt" | grep -q "forward-email=${FORWARD_TO}"; then
+              echo "Email forwarding DNS is live."; exit 0; fi
+            sleep 20
+          done
+          echo "::error::Records not visible at $ns within 10 minutes"; exit 1
