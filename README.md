@@ -40,3 +40,7 @@ Remove conflicting apex A/AAAA/ALIAS/ANAME records and any conflicting `www` CNA
 - Complete a real-device accessibility, navigation and content review.
 
 The site deliberately does not invent contact details, service availability, professional registrations or regulatory approvals. The enquiry section is informational until a verified contact channel is supplied. `PRIVACY-NOTICE-DRAFT.md` is a draft and must not be treated as a completed Privacy Act 2020 or Health Information Privacy Code assessment. Do not collect health information through this static site.
+
+## What is published
+
+The Pages workflow publishes only the public files: the HTML pages, `assets/`, `CNAME`, `robots.txt` and `sitemap.xml`. Markdown, drafts (such as `PRIVACY-NOTICE-DRAFT.md`) and repository files are never deployed; the workflow fails if any other file type appears. `404.html` uses root-relative links because GitHub Pages serves it at any path.

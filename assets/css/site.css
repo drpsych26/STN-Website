@@ -100,3 +100,4 @@ a.card .go{display:inline-block;margin-top:14px;color:#d39cff;font-weight:700;fo
 .cta-invest:hover{border-color:var(--purple)}
 .cta-pill[aria-current="page"]{outline:2px solid #e7c6ff;outline-offset:2px}
 @media(max-width:1180px){.navcta-group{justify-content:center;padding:0 0 12px}}
+.card h2{font-family:var(--font-display);font-weight:600;font-size:21px;margin:12px 0 8px;text-wrap:balance}

@@ -44,10 +44,23 @@ jobs:
           grep -q 'not yet accepting referrals' services.html
           grep -q 'not a registered charity' support.html
           grep -q 'Financial Markets Conduct Act 2013' investors.html
+      - name: Assemble only the public files (no drafts, docs or repository files)
+        run: |
+          set -euo pipefail
+          test -s robots.txt && test -s sitemap.xml && test -s 404.html
+          mkdir _site
+          cp ./*.html CNAME robots.txt sitemap.xml _site/
+          cp -R assets _site/assets
+          if find _site -type f ! \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.png' -o -name '*.svg' \
+               -o -name '*.ico' -o -name '*.woff2' -o -name 'CNAME' -o -name 'robots.txt' -o -name 'sitemap.xml' \) | grep .; then
+            echo "Unexpected file type in the public site (listed above)." >&2
+            exit 1
+          fi
+          echo "Publishing $(find _site -type f | wc -l) files."
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: .
+          path: _site
   deploy:
     environment:
       name: github-pages
