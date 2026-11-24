@@ -31,7 +31,7 @@ jobs:
           test -s assets/js/site.js
           test -s assets/brand/stn-logo-original.png
           grep -q '<title>Supportive Therapy Network' index.html
-          for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html; do
+          for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html support.html investors.html; do
             test -s "$page"
             grep -q 'name="viewport"' "$page"
             grep -q 'class="navlinks"' "$page"
@@ -42,6 +42,8 @@ jobs:
           grep -q 'id="contact"' contact.html
           grep -q 'id="privacy"' legal.html
           grep -q 'not yet accepting referrals' services.html
+          grep -q 'not a registered charity' support.html
+          grep -q 'Financial Markets Conduct Act 2013' investors.html
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
