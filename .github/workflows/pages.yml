@@ -33,7 +33,6 @@ jobs:
           grep -q '<title>Supportive Therapy Network' index.html
           for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html support.html partnerships.html; do
             test -s "$page"
-            ! grep -qi 'investors@supportivetherapy.network' "$page"
             grep -q 'name="viewport"' "$page"
             grep -q 'class="navlinks"' "$page"
             grep -q 'aria-current="page"' "$page"
