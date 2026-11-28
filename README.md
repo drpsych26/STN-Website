@@ -12,15 +12,15 @@ Public-facing STN website source.
 
 ## Intended custom domain
 
-STN has supplied `supportivetherapy.network` as its custom domain. A root `CNAME` marker has been committed to this repository. **The custom domain is not yet confirmed active.**
+GitHub Pages deployment run 64 completed successfully on 28 November 2026 and returned `https://supportivetherapy.network/` as the deployment environment URL. This confirms the Pages deployment target, but it is not a substitute for an independent public DNS, TLS certificate, HTTP-to-HTTPS redirect and live-page check. Those external checks remain open because the live domain could not be independently fetched during this review.
 
-This repository deploys through a custom GitHub Actions workflow. GitHub's documentation states that a `CNAME` file is ignored for this publishing method. The repository owner must therefore set the custom domain in the GitHub Pages settings:
+This repository deploys through a custom GitHub Actions workflow. GitHub's documentation states that a `CNAME` file is ignored for this publishing method; the custom domain must be configured in GitHub Pages settings. Verify that the setting still shows `supportivetherapy.network`:
 
 1. Open https://github.com/drpsych26/STN-Website/settings/pages
-2. Under **Custom domain**, enter `supportivetherapy.network` and save.
-3. Confirm GitHub displays the domain and begins DNS/HTTPS checks.
+2. Under **Custom domain**, confirm `supportivetherapy.network` is present.
+3. Confirm GitHub reports DNS checks passed, a valid HTTPS certificate is issued, and **Enforce HTTPS** is enabled.
 
-Then configure DNS at the domain registrar/provider:
+Then verify DNS at the domain registrar/provider:
 
 | Type | Host/name | Value |
 |---|---|---|
