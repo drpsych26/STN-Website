@@ -33,7 +33,7 @@ Remove conflicting apex A/AAAA/ALIAS/ANAME records and any conflicting `www` CNA
 
 ## Required before operational launch
 
-- Confirm the public phone number and service address. The active published addresses (info@, help@, partnership@, support@, accounts@, privacy@supportivetherapy.network) are intended to forward to STN.ltd.management@gmail.com through ImprovMX. The investors@ alias is to be retired and must not be republished. Confirm forwarding remains active after DNS or routing changes.
+- Confirm the public phone number and service address. The six active published addresses (info@, help@, partnership@, support@, accounts@ and privacy@ at supportivetherapy.network) are configured for forwarding to STN.ltd.management@gmail.com through ImprovMX. Keep these forwarding routes in place as the permanent destination for domain email. Confirm forwarding after any DNS or routing change.
 - Publish a reviewed privacy notice and website terms.
 - Confirm which services are currently accepting referrals and the regions covered.
 - Confirm approved logo/brand assets and all public claims about clinical validation, registrations, accreditations or service availability.
