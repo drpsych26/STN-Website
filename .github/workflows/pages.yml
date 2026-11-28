@@ -44,10 +44,25 @@ jobs:
           grep -q 'not yet accepting referrals' services.html
           grep -q 'not a registered charity' support.html
           grep -q 'partnership@supportivetherapy.network' partnerships.html
+      - name: Assemble allow-listed public site
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+          for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html support.html partnerships.html 404.html; do
+            test -s "$page"
+            cp "$page" _site/
+          done
+          cp -R assets _site/assets
+          cp robots.txt sitemap.xml _site/
+          if [ -f CNAME ]; then cp CNAME _site/CNAME; fi
+          test ! -e _site/README.md
+          test ! -e _site/PRIVACY-NOTICE-DRAFT.md
+          find _site -type f -print | sort
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: .
+          path: _site
   deploy:
     environment:
       name: github-pages
