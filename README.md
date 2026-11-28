@@ -7,8 +7,8 @@ Public-facing STN website source.
 **Latest GitHub Pages deployment: successful.** Build validation, allow-listed site assembly, artifact upload and Pages deployment all passed on 28 November 2026.
 
 - Public domain intended: https://supportivetherapy.network
-- Latest deployment run: https://github.com/drpsych26/STN-Website/actions/runs/46129074604
-- Deployed commit: `46f655c3e406aa52f734704b1bb527b72fb1e287`
+- Latest deployment run: https://github.com/drpsych26/STN-Website/actions/runs/46129177600
+- Deployed commit: `e52843b45dd0dd5147bb2abbf114adeb25eedacd`
 
 ## Intended custom domain
 
