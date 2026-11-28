@@ -1,4 +1,4 @@
-// Shared behaviour: footer year; on narrow screens, scroll the active tab into view.
+// Shared behaviour: footer year and central page navigation.
 (function () {
   var y = new Date().getFullYear();
   document.querySelectorAll('.year').forEach(function (el) { el.textContent = y; });
@@ -8,3 +8,11 @@
     nav.scrollLeft = cur.offsetLeft - (nav.clientWidth - cur.offsetWidth) / 2;
   }
 })();
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var selector = document.querySelector('.page-navigation');
+  if (selector) selector.addEventListener('change', function () {
+    if (selector.value) window.location.href = selector.value;
+  });
+});
