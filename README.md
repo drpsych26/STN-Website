@@ -4,10 +4,11 @@ Public-facing STN website source.
 
 ## Deployment status
 
-**GitHub Pages deployment: successful.** Build and deploy jobs passed on 15 November 2026.
+**Latest GitHub Pages deployment: successful.** Build validation, allow-listed site assembly, artifact upload and Pages deployment all passed on 28 November 2026.
 
-- Current Pages URL: supportive therapy.network
-- Workflow: https://github.com/drpsych26/STN-Website/actions/runs/43658020226
+- Public domain intended: https://supportivetherapy.network
+- Latest deployment run: https://github.com/drpsych26/STN-Website/actions/runs/46129074604
+- Deployed commit: `46f655c3e406aa52f734704b1bb527b72fb1e287`
 
 ## Intended custom domain
 
@@ -34,7 +35,7 @@ Remove conflicting apex A/AAAA/ALIAS/ANAME records and any conflicting `www` CNA
 ## Required before operational launch
 
 - Confirm the public phone number and service address. The six active published addresses (info@, help@, partnership@, support@, accounts@ and privacy@ at supportivetherapy.network) are configured for forwarding to STN.ltd.management@gmail.com through ImprovMX. Keep these forwarding routes in place as the permanent destination for domain email. Confirm forwarding after any DNS or routing change.
-- Finalise and approve the website privacy notice, including the third-party FormSubmit processor, privacy officer details, retention schedule and mailbox controls.
+- Formally designate and publish the STN privacy officer; approve the complete website privacy notice and confirm retention, mailbox access controls, processor terms and incident handling.
 - Confirm which services are currently accepting referrals and the regions covered.
 - Confirm approved logo/brand assets and all public claims about clinical validation, registrations, accreditations or service availability.
 - Complete a real-device accessibility, navigation and content review.
