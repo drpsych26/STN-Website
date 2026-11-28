@@ -34,14 +34,19 @@ jobs:
           for page in index.html about.html approach.html services.html assessments.html safety.html legal.html contact.html support.html partnerships.html; do
             test -s "$page"
             grep -q 'name="viewport"' "$page"
-            grep -q 'class="navlinks"' "$page"
-            grep -q 'aria-current="page"' "$page"
+            grep -q 'id="page-navigation"' "$page"
+            grep -q 'class="page-navigation"' "$page"
+            grep -q "value=\"$page\" selected" "$page"
+            grep -q 'name="description"' "$page"
             grep -q 'href="tel:1737"' "$page"
             grep -q 'assets/css/site.css' "$page"
             grep -q 'rel="canonical"' "$page"
             grep -q 'property="og:url"' "$page"
           done
           grep -q 'id="contact"' contact.html
+          grep -q 'action="https://formsubmit.co/support@supportivetherapy.network"' contact.html
+          grep -q 'name="privacy_acknowledgement"' contact.html
+          grep -q 'mailto:support@supportivetherapy.network' legal.html
           grep -q 'id="privacy"' legal.html
           grep -q 'not yet accepting referrals' services.html
           grep -q 'not a registered charity' support.html
