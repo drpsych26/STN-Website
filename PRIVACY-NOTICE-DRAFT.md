@@ -16,7 +16,7 @@ STN uses enquiry information to receive, assess, route and respond to general bu
 
 ## Form processor and disclosure
 
-The Contact form is submitted to FormSubmit, an independent third-party form-processing service, which forwards submissions to info@supportivetherapy.network. FormSubmit's published FAQ states that it retains submissions for 30 days. FormSubmit's own privacy terms apply to its processing. STN does not control its systems or guarantee the location of its processing or storage. Visitors should review the provider's current terms and privacy information before submitting.
+The Contact form is submitted to FormSubmit, an independent third-party form-processing service, which forwards submissions to support@supportivetherapy.network. FormSubmit's published FAQ states that it retains submissions for 30 days. FormSubmit's own privacy terms apply to its processing. STN does not control its systems or guarantee the location of its processing or storage. Visitors should review the provider's current terms and privacy information before submitting.
 
 ## What not to submit
 
