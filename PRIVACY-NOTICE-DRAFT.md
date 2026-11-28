@@ -1,25 +1,41 @@
-# Website Privacy Notice — Publication Draft
+# Website Privacy Notice — STN Contact Form
 
-**Status: Draft — requires STN review before publication.**
+**Status: Operational disclosure draft — requires review by STN's privacy officer or qualified adviser before being treated as a complete privacy notice.**
 
-This notice must be completed with the verified legal entity details, privacy officer contact, hosting/provider information, analytics and form-processing details before the website collects personal information.
+## Who collects the information
 
-## Website use
-This website currently provides general information about Supportive Therapy Network Limited and its intended whole-person support model. Do not submit health information, crisis details, identity documents or other sensitive personal information through this website.
+Supportive Therapy Network Limited (STN), Auckland, New Zealand, receives enquiries submitted through the Contact page.
 
 ## Information collected
-Before publication, STN must document whether the hosting provider records server logs, whether analytics or cookies are used, and whether any enquiry forms or third-party embeds collect information.
 
-## Purpose and disclosure
-Any personal information collected must have a defined lawful purpose, be limited to what is necessary, and be handled in accordance with applicable New Zealand privacy requirements. Details of processors, overseas disclosures and retention periods must be inserted after the production hosting configuration is confirmed.
+The form asks for a person's full name, email address, enquiry category, subject and message. Phone number and address are optional. Visitors should provide only information reasonably necessary to explain a general enquiry.
+
+## Why STN collects it
+
+STN uses enquiry information to receive, assess, route and respond to general business, service-information, partnership, funding, media and website enquiries, and to maintain relevant business correspondence.
+
+## Form processor and disclosure
+
+The Contact form is submitted to FormSubmit, an independent third-party form-processing service, which forwards submissions to info@supportivetherapy.network. FormSubmit's published FAQ states that it retains submissions for 30 days. FormSubmit's own privacy terms apply to its processing. STN does not control its systems or guarantee the location of its processing or storage. Visitors should review the provider's current terms and privacy information before submitting.
+
+## What not to submit
+
+Do not submit health information, diagnoses, medication details, clinical records, crisis information, identity documents, financial account information or personal information about another person. This form is not a clinical intake, referral or emergency service. It is not monitored as a crisis-response channel.
 
 ## Access and correction
-A verified privacy contact and process for access and correction requests must be published before personal information is collected.
 
-## Security and retention
-STN must document the safeguards, retention periods and secure disposal process applicable to each information category.
+To request access to or correction of personal information held by STN, email privacy@supportivetherapy.network. The identity and direct contact details of STN's privacy officer must be confirmed and published.
+
+## Retention and security
+
+FormSubmit states that it retains submissions for 30 days. STN should retain enquiry emails only for as long as reasonably required for the enquiry, business recordkeeping and applicable legal obligations, then securely dispose of them under an approved retention schedule. STN must confirm mailbox access controls and internal deletion arrangements.
+
+## New Zealand privacy requirements
+
+STN must assess and comply with applicable requirements under the Privacy Act 2020 and, where relevant, the Health Information Privacy Code 2020. This draft is not a legal opinion, privacy impact assessment or certification of compliance.
 
 ## Contact
-**Privacy officer:** To be completed with verified STN contact details before publication.
 
-Do not treat this draft as a completed Privacy Act 2020 or Health Information Privacy Code compliance assessment.
+- General enquiries: info@supportivetherapy.network
+- Privacy enquiries: privacy@supportivetherapy.network
+- Privacy officer: name and direct details to be confirmed before final approval.

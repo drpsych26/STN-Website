@@ -107,3 +107,19 @@ a.card .go{display:inline-block;margin-top:14px;color:#d39cff;font-weight:700;fo
 .page-navigation:hover,.page-navigation:focus{border-color:var(--purple)}.page-navigation option{background:#17121e;color:var(--ink)}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:1180px){.page-nav{width:100%;flex:none;padding:4px 0 10px}.page-navigation{width:min(100%,360px)}}
+
+
+/* Contact enquiry form */
+.contact-form{display:grid;gap:10px;align-content:start}
+.contact-form label{font-size:14px;font-weight:700;color:var(--ink);margin-top:6px}
+.contact-form input:not([type=checkbox]),.contact-form select,.contact-form textarea{width:100%;min-width:0;background:#0d0a12;color:var(--ink);border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;font:inherit;font-size:15px}
+.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:2px solid var(--purple);outline-offset:2px;border-color:var(--purple)}
+.contact-form textarea{resize:vertical;min-height:150px}
+.contact-form select option{background:#17121e;color:var(--ink)}
+.contact-form .consent-line{display:flex;align-items:flex-start;gap:10px;font-weight:500;color:var(--muted);line-height:1.5;margin:12px 0}
+.contact-form .consent-line input{margin-top:5px;flex:0 0 auto;accent-color:var(--purple)}
+.contact-form .consent-line a{color:#d39cff}
+.contact-form .form-note{font-size:13px;color:var(--muted);margin:4px 0 12px}
+.contact-form button{justify-self:start;cursor:pointer;font:700 15px var(--font-body)}
+.form-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+@media(max-width:800px){.contact-form{padding:20px}}
