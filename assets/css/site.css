@@ -91,7 +91,7 @@ a.card .go{display:inline-block;margin-top:14px;color:#d39cff;font-weight:700;fo
 @media(max-width:460px){.grid4,.crisisgrid{grid-template-columns:1fr}}
 .domains .card:last-child:nth-child(odd){grid-column:1/-1}
 
-/* Header call-to-action buttons (Support STN, Investors) */
+/* Header call-to-action buttons (Support STN, Partnerships) */
 .navcta-group{display:flex;gap:10px;align-items:center;flex:0 0 auto}
 .cta-pill{border-radius:999px;padding:9px 16px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;line-height:1.2}
 .cta-support{background:var(--purple);color:#000}
