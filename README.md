@@ -33,7 +33,7 @@ Remove conflicting apex A/AAAA/ALIAS/ANAME records and any conflicting `www` CNA
 
 ## Required before operational launch
 
-- Confirm the public phone number and service address. Email: the published addresses (info@, help@, partnership@, investors@, support@, accounts@, privacy@ supportivetherapy.network) forward to the STN Gmail via ImprovMX. Delivery to the STN inbox was confirmed on 25 November 2026 with test messages. Re-test after any DNS or forwarding change.
+- Confirm the public phone number and service address. Email: the published addresses (info@, help@, partnership@, support@, accounts@, privacy@ supportivetherapy.network) forward to the STN Gmail via ImprovMX. Delivery to the STN inbox was confirmed on 25 November 2026 with test messages. Re-test after any DNS or forwarding change.
 - Publish a reviewed privacy notice and website terms.
 - Confirm which services are currently accepting referrals and the regions covered.
 - Confirm approved logo/brand assets and all public claims about clinical validation, registrations, accreditations or service availability.
