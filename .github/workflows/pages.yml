@@ -3,24 +3,29 @@ name: Deploy STN website to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
+# Pull requests run the validation and the public-file assembly with read-only access and never
+# deploy (Pages steps are skipped). id-token: write is held only by the deploy job, which runs on main only.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write   # configure-pages (enablement) on main; unchanged from before. Skipped on pull requests.
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Configure Pages
+      - if: github.event_name != 'pull_request'
+        name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
         with:
           enablement: true
@@ -44,11 +49,29 @@ jobs:
           grep -q 'not yet accepting referrals' services.html
           grep -q 'not a registered charity' support.html
           grep -q 'Financial Markets Conduct Act 2013' investors.html
+      - name: Assemble only the public files (no drafts, docs or repository files)
+        run: |
+          set -euo pipefail
+          test -s robots.txt && test -s sitemap.xml && test -s 404.html
+          mkdir _site
+          cp ./*.html CNAME robots.txt sitemap.xml _site/
+          cp -R assets _site/assets
+          if find _site -type f ! \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.png' -o -name '*.svg' \
+               -o -name '*.ico' -o -name '*.woff2' -o -name 'CNAME' -o -name 'robots.txt' -o -name 'sitemap.xml' \) | grep .; then
+            echo "Unexpected file type in the public site (listed above)." >&2
+            exit 1
+          fi
+          echo "Publishing $(find _site -type f | wc -l) files."
       - name: Upload site artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: .
+          path: _site
   deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
